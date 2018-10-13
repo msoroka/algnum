@@ -23,7 +23,7 @@ double absoluteError(double x, double y);
 double relativeError(double x, double y);
 void saveToFile(char name[], double myValues[], double builtInValues[], double absoluteErrors[], double relativeErrors[]);
 
-int main()
+int main() {
     int iteration = 0;
     double myValues[range];
     double builtInValues[range];
@@ -151,7 +151,7 @@ double arctanPreviousFromTheBeginning(double x, int n) {
     double result = x;
 
     for(int i = 0; i <= n; i++) {
-        first *= (-1) * (power(x, 2) * ((2 * i) + 1)) / ((2 * n) - 3);
+        first *= (-1) * ((power(x, 2)) * (2 * i + 1))/(2 * i + 3);
         result += first;
     }
 
@@ -184,7 +184,7 @@ double arctanPreviousFromTheEnd(double x, int n) {
     int iteration = 0;
 
     for(int i = 0; i <= n; i++) {
-        first *= (-1) * (power(x, 2) * ((2 * i) + 1)) / ((2 * n) - 3);
+        first *= (-1) * ((power(x, 2)) * (2 * i + 1))/(2 * i + 3);
         countedValues[iteration] = first;
         iteration++;
     }
@@ -219,7 +219,7 @@ void saveToFile(char name[], double myValues[], double builtInValues[], double a
     for(double i = FROM; i <= TO; i = i + STEP) {
         fprintf(
             file,
-            "%.6lf, %.20lf, %.20lf, %.20lf, %.20lf\n",
+            "%.4lf, %.20lf, %.20lf, %.20lf, %.20lf\n",
             i,
             myValues[iteration],
             builtInValues[iteration],
