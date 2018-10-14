@@ -4,8 +4,8 @@
 
 #define FROM  -0.99
 #define TO    1
-#define STEP  0.001
-#define N     100
+#define STEP  0.01
+#define N     1000
 
 const int range = (int)((-1) * (FROM - TO) / STEP);
 
