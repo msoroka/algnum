@@ -36,4 +36,14 @@ public class MyFloat implements MatrixOperations<MyFloat, Float> {
 
         return floatMatrix;
     }
+
+    public MyFloat[][] generateVector(int size) {
+        MyFloat[][] floatVector = new MyFloat[size][1];
+
+        for (int j = 0; j < size; j++) {
+            floatVector[j][0] = new MyFloat(randomMatrix[j][0].getNominator(), randomMatrix[j][0].getDenominator());
+        }
+
+        return floatVector;
+    }
 }

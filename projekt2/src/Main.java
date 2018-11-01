@@ -15,5 +15,13 @@ public class Main {
 
         MyMatrix<MyFloat> floatMatrix = new MyMatrix<>(new MyFloat(randomMatrix).generateMatrix(SIZE));
         System.out.println(floatMatrix);
+
+        Randomizer[][] randomVector = new Randomizer().generateRandomVector(SIZE);
+
+        MyMatrix<MyDouble> doubleVector = new MyMatrix<>(new MyDouble(randomVector).generateVector(SIZE));
+        System.out.println(doubleVector);
+
+        MyMatrix<MyFloat> floatVector = new MyMatrix<>(new MyFloat(randomVector).generateVector(SIZE));
+        System.out.println(floatVector);
     }
 }

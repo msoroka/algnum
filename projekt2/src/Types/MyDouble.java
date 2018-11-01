@@ -36,4 +36,16 @@ public class MyDouble implements MatrixOperations<MyDouble, Double> {
 
         return doubleMatrix;
     }
+
+    public MyDouble[][] generateVector(int size) {
+        MyDouble[][] doubleVector = new MyDouble[size][1];
+
+        for (int j = 0; j < size; j++) {
+            doubleVector[j][0] = new MyDouble(randomMatrix[j][0].getNominator(), randomMatrix[j][0].getDenominator());
+        }
+
+        return doubleVector;
+    }
 }
+
+

@@ -13,7 +13,7 @@ public class MyMatrix<Type extends MatrixOperations> {
 
         for (int i = 0; i < matrix.length; i++) {
             result += "|";
-            for (int j = 0; j < matrix.length; j++) {
+            for (int j = 0; j < matrix[i].length; j++) {
                 result = result + matrix[i][j].getValue();
                 if(j < matrix.length - 1) {
                     result+= "  ";
