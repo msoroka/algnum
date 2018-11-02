@@ -1,6 +1,5 @@
+import Matrix.MyMatrix;
 import Matrix.Randomizer;
-import Types.MyDouble;
-import Types.MyFloat;
 
 public class Main {
 
@@ -9,19 +8,21 @@ public class Main {
         final int SIZE = 2;
 
         Randomizer[][] randomMatrix = new Randomizer().generateRandomMatrix(SIZE);
-
-        MyMatrix<MyDouble> doubleMatrix = new MyMatrix<>(new MyDouble(randomMatrix).generateMatrix(SIZE));
-        System.out.println(doubleMatrix);
-
-        MyMatrix<MyFloat> floatMatrix = new MyMatrix<>(new MyFloat(randomMatrix).generateMatrix(SIZE));
-        System.out.println(floatMatrix);
-
         Randomizer[][] randomVector = new Randomizer().generateRandomVector(SIZE);
 
-        MyMatrix<MyDouble> doubleVector = new MyMatrix<>(new MyDouble(randomVector).generateVector(SIZE));
-        System.out.println(doubleVector);
+        MyMatrix<Float> floatMatrix = new MyMatrix<>(Float.class, randomMatrix, SIZE, SIZE);
+        MyMatrix<Double> doubleMatrix = new MyMatrix<>(Double.class, randomMatrix, SIZE, SIZE);
+        MyMatrix<Float> floatVector = new MyMatrix<>(Float.class, randomVector, SIZE, 1);
+        MyMatrix<Double> doubleVector = new MyMatrix<>(Double.class, randomVector, SIZE, 1);
 
-        MyMatrix<MyFloat> floatVector = new MyMatrix<>(new MyFloat(randomVector).generateVector(SIZE));
+        floatMatrix.generate();
+        doubleMatrix.generate();
+        floatVector.generate();
+        doubleVector.generate();
+
+        System.out.println(floatMatrix);
+        System.out.println(doubleMatrix);
         System.out.println(floatVector);
+        System.out.println(doubleVector);
     }
 }
