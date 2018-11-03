@@ -100,15 +100,15 @@ public class MyMatrix<T extends Number> {
                 }
 
                 for (int j = 0; j < matrix.columns; j++) {
-                    T tmp = matrix.matrix[i][j];
+                    T temp = matrix.matrix[i][j];
                     matrix.matrix[i][j] = matrix.matrix[max][j];
-                    matrix.matrix[max][j] = tmp;
+                    matrix.matrix[max][j] = temp;
                 }
 
                 for (int j = 0; j < vector.columns; j++) {
-                    T tmp = vector.matrix[i][j];
+                    T temp = vector.matrix[i][j];
                     vector.matrix[i][j] = vector.matrix[max][j];
-                    vector.matrix[max][j] = tmp;
+                    vector.matrix[max][j] = temp;
                 }
 
                 for (int j = i + 1; j < n; j++) {
@@ -141,15 +141,15 @@ public class MyMatrix<T extends Number> {
                 }
 
                 for (int j = 0; j < matrix.columns; j++) {
-                    T tmp = matrix.matrix[i][j];
+                    T temp = matrix.matrix[i][j];
                     matrix.matrix[i][j] = matrix.matrix[max][j];
-                    matrix.matrix[max][j] = tmp;
+                    matrix.matrix[max][j] = temp;
                 }
 
                 for (int j = 0; j < vector.columns; j++) {
-                    T tmp = vector.matrix[i][j];
+                    T temp = vector.matrix[i][j];
                     vector.matrix[i][j] = vector.matrix[max][j];
-                    vector.matrix[max][j] = tmp;
+                    vector.matrix[max][j] = temp;
                 }
 
                 for (int j = i + 1; j < n; j++) {

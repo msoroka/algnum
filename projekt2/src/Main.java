@@ -3,7 +3,7 @@ import Matrix.Randomizer;
 
 public class Main {
 
-    final static int SIZE = 1000;
+    final static int SIZE = 1500;
     static long start;
     static long elapsedTime;
 
@@ -16,15 +16,19 @@ public class Main {
 //        floatWithPartialChoice(randomMatrix, randomVector);
 //        doubleWithPartialChoice(randomMatrix, randomVector);
 
-        start = System.currentTimeMillis();
-        floatWithoutChoice(randomMatrix, randomVector);
-        elapsedTime = (System.currentTimeMillis() - start);
-        System.out.println("Float bez wyboru elementu: " + elapsedTime / 1000F + "s.");
+//        try {
+//            Thread.sleep(2000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
         start = System.currentTimeMillis();
+        floatWithoutChoice(randomMatrix, randomVector);
         doubleWithoutChoice(randomMatrix, randomVector);
+        floatWithPartialChoice(randomMatrix, randomVector);
+        doubleWithPartialChoice(randomMatrix, randomVector);
         elapsedTime = (System.currentTimeMillis() - start);
-        System.out.println("Double bez wyboru elementu: " + elapsedTime / 1000F + "s.");
+        System.out.println("Przedskoczek: " + elapsedTime / 1000F + "s.");
 
         start = System.currentTimeMillis();
         floatWithPartialChoice(randomMatrix, randomVector);
@@ -35,6 +39,16 @@ public class Main {
         doubleWithPartialChoice(randomMatrix, randomVector);
         elapsedTime = (System.currentTimeMillis() - start);
         System.out.println("Double z częściowym wyborem: " + elapsedTime / 1000F + "s.");
+
+        start = System.currentTimeMillis();
+        floatWithoutChoice(randomMatrix, randomVector);
+        elapsedTime = (System.currentTimeMillis() - start);
+        System.out.println("Float bez wyboru elementu: " + elapsedTime / 1000F + "s.");
+
+        start = System.currentTimeMillis();
+        doubleWithoutChoice(randomMatrix, randomVector);
+        elapsedTime = (System.currentTimeMillis() - start);
+        System.out.println("Double bez wyboru elementu: " + elapsedTime / 1000F + "s.");
     }
 
     public static void floatWithoutChoice(Randomizer[][] randomMatrix, Randomizer[][] randomVector) {
