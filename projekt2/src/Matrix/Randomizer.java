@@ -43,7 +43,6 @@ public class Randomizer {
             randomVector[j][0] = new Randomizer();
         }
 
-
         return randomVector;
     }
 
