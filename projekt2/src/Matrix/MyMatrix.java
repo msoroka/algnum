@@ -71,7 +71,8 @@ public class MyMatrix<T extends Number> {
                 VectorCheck.matrix[i][0] = (T) (Float) (sum) ;
             }
 
-            System.out.println("sprawdzenie wektora "+VectorCheck);
+//            System.out.println("Wynik bez wyboru: ");
+//            System.out.println(resultVector);
         }
 
         if (type.equals(Double.class)) {
@@ -104,7 +105,7 @@ public class MyMatrix<T extends Number> {
                 VectorCheck.matrix[i][0] = (T) (Double) (sum) ;
             }
 
-            System.out.println("sprawdzenie wektora "+VectorCheck);
+//            System.out.println("sprawdzenie wektora "+VectorCheck);
         }
 
         return VectorCheck;
@@ -166,7 +167,8 @@ public class MyMatrix<T extends Number> {
                 VectorCheck.matrix[i][0] = (T) (Float) (sum) ;
             }
 
-            System.out.println("sprawdzenie wektora "+VectorCheck);
+//            System.out.println("Wynik z czesciowym wyborem: ");
+//            System.out.println(resultVector);
         }
 
         if (type.equals(Double.class)) {
@@ -219,7 +221,7 @@ public class MyMatrix<T extends Number> {
                 VectorCheck.matrix[i][0] = (T) (Double) (sum) ;
             }
 
-            System.out.println("sprawdzenie wektora "+VectorCheck);
+//            System.out.println("sprawdzenie wektora "+VectorCheck);
 
         }
 
@@ -231,12 +233,8 @@ public class MyMatrix<T extends Number> {
         MyMatrix<T> resultVector = new MyMatrix(type, n, 1);
         MyMatrix<T> trueResultVector = new MyMatrix(type, n, 1);
 
-
         MyMatrix<T> VectorCheck = new MyMatrix<>(type, n, 1);
 
-
-
-        ;
 
         int[] truePosition;
         truePosition= new int[n];
@@ -310,6 +308,8 @@ public class MyMatrix<T extends Number> {
                 trueResultVector.matrix[truePosition[j]][0]= (T) (Float) (resultVector.matrix[j][0].floatValue());
             }
 
+//            System.out.println("Wynik z pelnym: ");
+//            System.out.println(trueResultVector);
 //            System.out.println("zmienone wyniki do sprawdzania \n" + trueResultVector);
 //
 //
@@ -326,7 +326,7 @@ public class MyMatrix<T extends Number> {
                 VectorCheck.matrix[i][0] = (T) (Float) (sum) ;
             }
 
-            System.out.println("sprawdzenie wektora "+VectorCheck);
+//            System.out.println("sprawdzenie wektora "+VectorCheck);
         }
 
         if (type.equals(Double.class)) {
@@ -338,7 +338,7 @@ public class MyMatrix<T extends Number> {
 
                 for (int j = i; j < matrix.rows; j++) {
                     for (int k = i; k < matrix.columns; k++) {
-                        if (Math.abs(matrix.matrix[j][k].floatValue()) > Math.abs(matrix.matrix[maxRow][maxColumn].doubleValue())) {
+                        if (Math.abs(matrix.matrix[j][k].doubleValue()) > Math.abs(matrix.matrix[maxRow][maxColumn].doubleValue())) {
                             maxRow = j;
                             maxColumn = k;
 
@@ -390,7 +390,7 @@ public class MyMatrix<T extends Number> {
                 for (int j = i + 1; j < n; j++) {
                     sum += matrix.matrix[i][j].doubleValue() * resultVector.matrix[j][0].doubleValue();
                 }
-                resultVector.matrix[i][0] = (T) (Double) ((vector.matrix[i][0].floatValue() - sum) / matrix.matrix[i][i].doubleValue());
+                resultVector.matrix[i][0] = (T) (Double) ((vector.matrix[i][0].doubleValue() - sum) / matrix.matrix[i][i].doubleValue());
             }
             for (int j = 0; j < n; j++) {
                 trueResultVector.matrix[truePosition[j]][0]= (T) (Double) (resultVector.matrix[j][0].doubleValue());
@@ -409,7 +409,7 @@ public class MyMatrix<T extends Number> {
                 VectorCheck.matrix[i][0] = (T) (Double) (sum) ;
             }
 
-            System.out.println("sprawdzenie wektora "+VectorCheck);
+//            System.out.println("sprawdzenie wektora "+VectorCheck);
 
         }
 
