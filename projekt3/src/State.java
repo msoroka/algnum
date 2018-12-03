@@ -2,7 +2,6 @@ public class State {
 
     private int yes = 0;
     private int no = 0;
-    private double result = 0.0;
 
     public State() {}
 
@@ -27,11 +26,4 @@ public class State {
         this.no = no;
     }
 
-    public double getResult() {
-        return result;
-    }
-
-    public void setResult(double result) {
-        this.result = result;
-    }
 }
