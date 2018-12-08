@@ -27,7 +27,7 @@ public class MatrixGenerate {
 
             Results[i][1] = 0;
         }
-        Map<>
+
 
         for (int i = size-n; i < n; n++) {
 
