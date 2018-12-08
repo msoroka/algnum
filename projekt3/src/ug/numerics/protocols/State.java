@@ -1,3 +1,5 @@
+package ug.numerics.protocols;
+
 public class State {
 
     private int yes = 0;
