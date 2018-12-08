@@ -9,8 +9,8 @@ import java.util.Random;
 public class Main {
 
     static int N = 120;
-    static int YES = 50;
-    static int NO = 55;
+    static int YES = 57;
+    static int NO = 54;
     static int UN = N - YES - NO;
     static int ITERATIONS = 1000;
     static int MONTE_CARLO_TESTS = 100;
@@ -39,26 +39,33 @@ public class Main {
     static long elapsedTime = 0;
 
     public static void main(String[] args) throws FileNotFoundException {
+        System.out.println("Parameters: ");
+        System.out.println("N:          " + N);
+        System.out.println("YES:        " + YES);
+        System.out.println("NO:         " + NO);
+        System.out.println("PRECISION:  " + PRECISION);
+        System.out.println();
+
         executeCalculations();
 
         System.out.println();
-        System.out.print("Gauss partial method: ");
-        System.out.printf("%." + PRECISION + "f \n",gaussResult[resultPosition]);
-        System.out.print("Jacobi method: ");
-        System.out.printf("%." + PRECISION + "f \n",jacobiResult[resultPosition]);
-        System.out.print("Gauss-Seidel partial method: ");
-        System.out.printf("%." + PRECISION + "f \n",gaussSeidelResult[resultPosition]);
+        System.out.print("Gauss partial method:         ");
+        System.out.printf("%." + PRECISION + "f \n", gaussResult[resultPosition]);
+        System.out.print("Jacobi method:                ");
+        System.out.printf("%." + PRECISION + "f \n", jacobiResult[resultPosition]);
+        System.out.print("Gauss-Seidel partial method:  ");
+        System.out.printf("%." + PRECISION + "f \n", gaussSeidelResult[resultPosition]);
 
         System.out.println();
-        System.out.print("Error between Gauss and Jacobii: ");
-        System.out.printf("%." + PRECISION + "f \n",error(gaussResult[resultPosition], jacobiResult[resultPosition]));
-        System.out.print("Error between Gauss and Gauss-Seidel: ");
-        System.out.printf("%." + PRECISION + "f \n",error(gaussResult[resultPosition], gaussSeidelResult[resultPosition]));
-        System.out.print("Error between Jacobii and Gauss-Seidel: ");
-        System.out.printf("%." + PRECISION + "f \n",error(gaussSeidelResult[resultPosition], jacobiResult[resultPosition]));
+        System.out.print("Error between Gauss and Jacobii:         ");
+        System.out.printf("%." + PRECISION + "f \n", error(gaussResult[resultPosition], jacobiResult[resultPosition]));
+        System.out.print("Error between Gauss and Gauss-Seidel:    ");
+        System.out.printf("%." + PRECISION + "f \n", error(gaussResult[resultPosition], gaussSeidelResult[resultPosition]));
+        System.out.print("Error between Jacobii and Gauss-Seidel:  ");
+        System.out.printf("%." + PRECISION + "f \n", error(gaussSeidelResult[resultPosition], jacobiResult[resultPosition]));
 
         //Uncomment to perform tests
-//        executeTests();
+        executeTests();
     }
 
     public static void executeCalculations() {
@@ -71,17 +78,17 @@ public class Main {
         start = System.currentTimeMillis();
         gaussSeidelResult = gaussSeidelMethod(matrixJacobi, resultsJacobi, COMBINATIONS, ITERATIONS, states);
         elapsedTime = (System.currentTimeMillis() - start);
-        System.out.println("Gauss time: " + elapsedTime / 1000F + "s.");
+        System.out.println("Gauss time:         " + elapsedTime / 1000F + "s.");
 
         start = System.currentTimeMillis();
         jacobiResult = jacobiMethod(matrixJacobi, resultsJacobi, COMBINATIONS, ITERATIONS, states);
         elapsedTime = (System.currentTimeMillis() - start);
-        System.out.println("Jacobi time: " + elapsedTime / 1000F + "s.");
+        System.out.println("Jacobi time:        " + elapsedTime / 1000F + "s.");
 
         start = System.currentTimeMillis();
         gaussResult = gaussWithPartialChoice(matrix, gaussResult, COMBINATIONS, states);
         elapsedTime = (System.currentTimeMillis() - start);
-        System.out.println("Gauss-Seidel time: " + elapsedTime / 1000F + "s.");
+        System.out.println("Gauss-Seidel time:  " + elapsedTime / 1000F + "s.");
 
         for (int i = 0; i < COMBINATIONS; i++) {
             if (states[i].getYes() == YES && states[i].getNo() == NO) {
@@ -438,7 +445,7 @@ public class Main {
             resultsJacobiMethod[i] = jacobiResult[resultPosition];
             resultsGaussSeidelMethod[i] = gaussSeidelResult[resultPosition];
 
-            sb.append(i);
+            sb.append(i + 1);
             sb.append(',');
             sb.append(N);
             sb.append(',');
@@ -456,9 +463,10 @@ public class Main {
 
         pw.write(sb.toString());
         pw.close();
-        differenceInMonteCarlo();
 
         System.out.print("done.\n");
+
+        differenceInMonteCarlo();
     }
 
     public static void differenceInMonteCarlo() {
@@ -466,8 +474,8 @@ public class Main {
         Arrays.sort(resultsGaussSeidelMethod);
         Arrays.sort(resultsJacobiMethod);
 
-        System.out.println("Biggest difference in Gauss method: " + error(resultsGaussMethod[0], resultsGaussMethod[resultsGaussMethod.length - 1]));
-        System.out.println("Biggest difference in Jacobi method: " + error(resultsJacobiMethod[0], resultsJacobiMethod[resultsJacobiMethod.length - 1]));
-        System.out.println("Biggest difference in Gauss-Seidel method: " + error(resultsGaussSeidelMethod[0], resultsGaussSeidelMethod[resultsGaussSeidelMethod.length - 1]));
+        System.out.println("Biggest difference in Gauss method:         " + error(resultsGaussMethod[0], resultsGaussMethod[resultsGaussMethod.length - 1]));
+        System.out.println("Biggest difference in Jacobi method:        " + error(resultsJacobiMethod[0], resultsJacobiMethod[resultsJacobiMethod.length - 1]));
+        System.out.println("Biggest difference in Gauss-Seidel method:  " + error(resultsGaussSeidelMethod[0], resultsGaussSeidelMethod[resultsGaussSeidelMethod.length - 1]));
     }
 }
