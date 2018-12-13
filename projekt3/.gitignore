@@ -58,3 +58,6 @@ pom.xml.tag
 .idea
 *.csv
 *.iml
+
+
+.idea

@@ -8,15 +8,16 @@ import java.util.Random;
 
 public class Main {
 
-    static int N = 120;
-    static int YES = 57;
-    static int NO = 54;
+    static int N = 80;
+    static int YES = 34;
+    static int NO = 39;
     static int UN = N - YES - NO;
     static int ITERATIONS = 1000;
-    static int MONTE_CARLO_TESTS = 100;
+    static int MONTE_CARLO_TESTS = 10;
+    static boolean optimization = true;
 
     //Precyzje, dla ktorych nalezy przeprowadzic testy to 6, 10 oraz 14
-    static int PRECISION = 6;
+    static int PRECISION = 20;
 
     final static int START_OF_RANGE = 20;
     final static int END_OF_RANGE = 120;
@@ -40,10 +41,11 @@ public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
         System.out.println("Parameters: ");
-        System.out.println("N:          " + N);
-        System.out.println("YES:        " + YES);
-        System.out.println("NO:         " + NO);
-        System.out.println("PRECISION:  " + PRECISION);
+        System.out.println("N:              " + N);
+        System.out.println("YES:            " + YES);
+        System.out.println("NO:             " + NO);
+        System.out.println("PRECISION:      " + PRECISION);
+        System.out.println("OPTIMITZATION:  " + optimization);
         System.out.println();
 
         executeCalculations();
@@ -63,9 +65,13 @@ public class Main {
         System.out.printf("%." + PRECISION + "f \n", error(gaussResult[resultPosition], gaussSeidelResult[resultPosition]));
         System.out.print("Error between Jacobii and Gauss-Seidel:  ");
         System.out.printf("%." + PRECISION + "f \n", error(gaussSeidelResult[resultPosition], jacobiResult[resultPosition]));
+        System.out.println();
+        System.out.println("Error between Gauss and Jacobii:         " + error(gaussResult[resultPosition], jacobiResult[resultPosition]));
+        System.out.println("Error between Gauss and Gauss-Seidel:    " + error(gaussResult[resultPosition], gaussSeidelResult[resultPosition]));
+        System.out.println("Error between Jacobii and Gauss-Seidel:  " + error(gaussSeidelResult[resultPosition], jacobiResult[resultPosition]));
 
         //Uncomment to perform tests
-        executeTests();
+//        executeTests();
     }
 
     public static void executeCalculations() {
@@ -78,7 +84,7 @@ public class Main {
         start = System.currentTimeMillis();
         gaussSeidelResult = gaussSeidelMethod(matrixJacobi, resultsJacobi, COMBINATIONS, ITERATIONS, states);
         elapsedTime = (System.currentTimeMillis() - start);
-        System.out.println("Gauss time:         " + elapsedTime / 1000F + "s.");
+        System.out.println("Gauss-Seidel time:         " + elapsedTime / 1000F + "s.");
 
         start = System.currentTimeMillis();
         jacobiResult = jacobiMethod(matrixJacobi, resultsJacobi, COMBINATIONS, ITERATIONS, states);
@@ -88,7 +94,7 @@ public class Main {
         start = System.currentTimeMillis();
         gaussResult = gaussWithPartialChoice(matrix, gaussResult, COMBINATIONS, states);
         elapsedTime = (System.currentTimeMillis() - start);
-        System.out.println("Gauss-Seidel time:  " + elapsedTime / 1000F + "s.");
+        System.out.println("Gauss time:  " + elapsedTime / 1000F + "s.");
 
         for (int i = 0; i < COMBINATIONS; i++) {
             if (states[i].getYes() == YES && states[i].getNo() == NO) {
@@ -302,11 +308,22 @@ public class Main {
 
 
             for (int j = i + 1; j < n; j++) {
-                double factor = matrix[j][i] / matrix[i][i];
-                matrix[j][0] = matrix[j][0] - factor * results[i];
+                if(optimization) {
+                    if(matrix[j][i] != 0){
+                        double factor = matrix[j][i] / matrix[i][i];
+                        matrix[j][0] = matrix[j][0] - factor * results[i];
 
-                for (int k = i; k < n; k++) {
-                    matrix[j][k] = matrix[j][k] - factor * matrix[i][k];
+                        for (int k = i; k < n; k++) {
+                            matrix[j][k] = matrix[j][k] - factor * matrix[i][k];
+                        }
+                    }
+                } else {
+                    double factor = matrix[j][i] / matrix[i][i];
+                    matrix[j][0] = matrix[j][0] - factor * results[i];
+
+                    for (int k = i; k < n; k++) {
+                        matrix[j][k] = matrix[j][k] - factor * matrix[i][k];
+                    }
                 }
             }
         }
@@ -459,6 +476,8 @@ public class Main {
             sb.append(',');
             sb.append(resultsJacobiMethod[i]);
             sb.append('\n');
+
+            System.out.println("\nTEST number: " + (i + 1) + " N: " + N);
         }
 
         pw.write(sb.toString());
