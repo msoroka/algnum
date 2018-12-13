@@ -308,15 +308,8 @@ public class Main {
 
 
             for (int j = i + 1; j < n; j++) {
-                if(optimization) {
-                    if(matrix[j][i] != 0){
-                        double factor = matrix[j][i] / matrix[i][i];
-                        matrix[j][0] = matrix[j][0] - factor * results[i];
-
-                        for (int k = i; k < n; k++) {
-                            matrix[j][k] = matrix[j][k] - factor * matrix[i][k];
-                        }
-                    }
+                if(optimization && matrix[j][i] == 0) {
+                    //skip calculation
                 } else {
                     double factor = matrix[j][i] / matrix[i][i];
                     matrix[j][0] = matrix[j][0] - factor * results[i];

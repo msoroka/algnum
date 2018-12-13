@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="271e1c03-a1e2-4c56-85a4-27a3f403cbc2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/monte_carlo_test.csv" beforeDir="false" afterPath="$PROJECT_DIR$/monte_carlo_test.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ug/numerics/protocols/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ug/numerics/protocols/Main.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -44,7 +42,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="3975" />
+          <entry key="JAVA" value="4031" />
           <entry key="PLAIN_TEXT" value="6" />
         </counts>
       </usages-collector>
@@ -64,8 +62,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ug/numerics/protocols/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="244">
-              <caret line="59" lean-forward="true" selection-start-line="59" selection-end-line="70" selection-end-column="145" />
+            <state relative-caret-position="105">
+              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -215,12 +213,12 @@
       <workItem from="1544263981412" duration="13509000" />
       <workItem from="1544354885524" duration="10000" />
       <workItem from="1544354968790" duration="10401000" />
-      <workItem from="1544707350683" duration="867000" />
+      <workItem from="1544707350683" duration="1379000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24787000" />
+    <option name="totallyTimeSpent" value="25299000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="826" extended-state="6" />
@@ -235,7 +233,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.5149864" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.5149864" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -276,8 +274,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ug/numerics/protocols/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="244">
-          <caret line="59" lean-forward="true" selection-start-line="59" selection-end-line="70" selection-end-column="145" />
+        <state relative-caret-position="105">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
