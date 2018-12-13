@@ -59,5 +59,6 @@ pom.xml.tag
 *.csv
 *.iml
 
+.csv
 
 .idea

@@ -1,26 +1,20 @@
 package ug.numerics.protocols;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.Random;
 
 public class Main {
 
-    static int N = 80;
-    static int YES = 34;
-    static int NO = 39;
+    static int N = 120;
+    static int YES = 30;
+    static int NO = 30;
     static int UN = N - YES - NO;
-    static int ITERATIONS = 1000;
-    static int MONTE_CARLO_TESTS = 10;
+    static int ITERATIONS = 2500;
+    static int MONTE_CARLO_TESTS = 10000;
     static boolean OPTIMIZATION = true;
+    static boolean TESTS = true;
 
     //Precyzje, dla ktorych nalezy przeprowadzic testy to 6, 10 oraz 14
     static int PRECISION = 20;
-
-    final static int START_OF_RANGE = 20;
-    final static int END_OF_RANGE = 120;
 
     static int COMBINATIONS = countCombinations();
     static int resultPosition = 0;
@@ -28,9 +22,6 @@ public class Main {
     static double[] gaussSeidelResult = new double[COMBINATIONS];
     static double[] gaussResult = new double[COMBINATIONS];
     static double[] resultsJacobi = new double[COMBINATIONS];
-    static double[] resultsGaussMethod = new double[MONTE_CARLO_TESTS];
-    static double[] resultsJacobiMethod = new double[MONTE_CARLO_TESTS];
-    static double[] resultsGaussSeidelMethod = new double[MONTE_CARLO_TESTS];
     static double[][] matrix = new double[COMBINATIONS][COMBINATIONS];
     static double[][] matrixJacobi = new double[COMBINATIONS][COMBINATIONS];
     static double pairsCount = (N * (N - 1)) / 2;
@@ -70,8 +61,10 @@ public class Main {
         System.out.println("Error between Gauss and Gauss-Seidel:    " + error(gaussResult[resultPosition], gaussSeidelResult[resultPosition]));
         System.out.println("Error between Jacobii and Gauss-Seidel:  " + error(gaussSeidelResult[resultPosition], jacobiResult[resultPosition]));
 
-        //Uncomment to perform tests
-//        executeTests();
+        if(TESTS){
+            String fileName = "MonteCarlo for ITER_" + MONTE_CARLO_TESTS + "N_" + N + " YES_" + YES + " NO_" + NO + ".csv";
+            new MonteCarlo(N, MONTE_CARLO_TESTS, YES, NO, gaussResult[resultPosition], jacobiResult[resultPosition], gaussSeidelResult[resultPosition], fileName);
+        }
     }
 
     public static void executeCalculations() {
@@ -398,96 +391,5 @@ public class Main {
                 matrix[i][changeCol] = n * u / pairsCount;
             }
         }
-    }
-
-    public static void executeTests() throws FileNotFoundException {
-        System.out.print("\nMonte carlo processing.. ");
-
-        PrintWriter pw = new PrintWriter(new File("monte_carlo_test.csv"));
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("TEST");
-        sb.append(',');
-        sb.append("N");
-        sb.append(',');
-        sb.append("Yes");
-        sb.append(',');
-        sb.append("No");
-        sb.append(',');
-        sb.append("Gauss results");
-        sb.append(',');
-        sb.append("Gauss-Seidel results");
-        sb.append(',');
-        sb.append("Jacobi results");
-        sb.append('\n');
-
-        for (int i = 0; i < MONTE_CARLO_TESTS; i++) {
-            Random rand = new Random();
-            int randomEvenNumber = START_OF_RANGE + rand.nextInt((END_OF_RANGE - START_OF_RANGE) / 2) * 2;
-
-            N = randomEvenNumber;
-            YES = NO = randomEvenNumber / 2;
-
-            COMBINATIONS = countCombinations();
-            pairsCount = (N * (N - 1)) / 2;
-            states = setStates();
-            matrix = new double[COMBINATIONS][COMBINATIONS];
-            gaussResult = new double[COMBINATIONS];
-            gaussResult = fillVectorWithZeros();
-            matrix = fillMatrixWithZeros();
-            matrixJacobi = matrix;
-            resultsJacobi = gaussResult;
-
-            buildMatrix();
-
-            gaussSeidelResult = gaussSeidelMethod(matrixJacobi, resultsJacobi, COMBINATIONS, ITERATIONS, states);
-            jacobiResult = jacobiMethod(matrixJacobi, resultsJacobi, COMBINATIONS, ITERATIONS, states);
-            gaussResult = gaussWithPartialChoice(matrix, gaussResult, COMBINATIONS, states);
-
-            for (int j = 0; j < COMBINATIONS; j++) {
-                if (states[j].getYes() == YES && states[j].getNo() == NO) {
-                    resultPosition = j;
-                    break;
-                }
-            }
-
-            resultsGaussMethod[i] = gaussResult[resultPosition];
-            resultsJacobiMethod[i] = jacobiResult[resultPosition];
-            resultsGaussSeidelMethod[i] = gaussSeidelResult[resultPosition];
-
-            sb.append(i + 1);
-            sb.append(',');
-            sb.append(N);
-            sb.append(',');
-            sb.append(YES);
-            sb.append(',');
-            sb.append(NO);
-            sb.append(',');
-            sb.append(resultsGaussMethod[i]);
-            sb.append(',');
-            sb.append(resultsGaussSeidelMethod[i]);
-            sb.append(',');
-            sb.append(resultsJacobiMethod[i]);
-            sb.append('\n');
-
-            System.out.println("\nTEST number: " + (i + 1) + " N: " + N);
-        }
-
-        pw.write(sb.toString());
-        pw.close();
-
-        System.out.print("done.\n");
-
-        differenceInMonteCarlo();
-    }
-
-    public static void differenceInMonteCarlo() {
-        Arrays.sort(resultsGaussMethod);
-        Arrays.sort(resultsGaussSeidelMethod);
-        Arrays.sort(resultsJacobiMethod);
-
-        System.out.println("Biggest difference in Gauss method:         " + error(resultsGaussMethod[0], resultsGaussMethod[resultsGaussMethod.length - 1]));
-        System.out.println("Biggest difference in Jacobi method:        " + error(resultsJacobiMethod[0], resultsJacobiMethod[resultsJacobiMethod.length - 1]));
-        System.out.println("Biggest difference in Gauss-Seidel method:  " + error(resultsGaussSeidelMethod[0], resultsGaussSeidelMethod[resultsGaussSeidelMethod.length - 1]));
     }
 }
