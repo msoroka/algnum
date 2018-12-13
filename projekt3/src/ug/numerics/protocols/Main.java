@@ -14,7 +14,7 @@ public class Main {
     static int UN = N - YES - NO;
     static int ITERATIONS = 1000;
     static int MONTE_CARLO_TESTS = 10;
-    static boolean optimization = true;
+    static boolean OPTIMIZATION = true;
 
     //Precyzje, dla ktorych nalezy przeprowadzic testy to 6, 10 oraz 14
     static int PRECISION = 20;
@@ -45,7 +45,7 @@ public class Main {
         System.out.println("YES:            " + YES);
         System.out.println("NO:             " + NO);
         System.out.println("PRECISION:      " + PRECISION);
-        System.out.println("OPTIMITZATION:  " + optimization);
+        System.out.println("OPTIMITZATION:  " + OPTIMIZATION);
         System.out.println();
 
         executeCalculations();
@@ -308,7 +308,7 @@ public class Main {
 
 
             for (int j = i + 1; j < n; j++) {
-                if(optimization && matrix[j][i] == 0) {
+                if(OPTIMIZATION && matrix[j][i] == 0) {
                     //skip calculation
                 } else {
                     double factor = matrix[j][i] / matrix[i][i];
