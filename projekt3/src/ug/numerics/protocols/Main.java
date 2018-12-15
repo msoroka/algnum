@@ -3,18 +3,18 @@ package ug.numerics.protocols;
 import java.io.FileNotFoundException;
 
 public class Main {
-    
-    static int N = 60;
-    static int YES = 10;
-    static int NO = 10;
+
+    static int N = 80;
+    static int YES = 32;
+    static int NO = 39;
     static int UN = N - YES - NO;
-    static int ITERATIONS = 500;
-    static int MONTE_CARLO_TESTS = 20;
+    static int ITERATIONS = 2000;
+    static int MONTE_CARLO_TESTS = 100000;
     static boolean OPTIMIZATION = true;
-    static boolean TESTS = true;
+    static boolean TESTS = false;
 
     //Precyzje, dla ktorych nalezy przeprowadzic testy to 6, 10 oraz 14
-    static int PRECISION = 20;
+    static int PRECISION = 14;
 
     static int COMBINATIONS = countCombinations();
     static int resultPosition = 0;
@@ -63,7 +63,7 @@ public class Main {
         System.out.println("Error between Gauss and Gauss-Seidel:    " + error(gaussResult[resultPosition], gaussSeidelResult[resultPosition]));
         System.out.println("Error between Jacobii and Gauss-Seidel:  " + error(gaussSeidelResult[resultPosition], jacobiResult[resultPosition]));
 
-        if(TESTS){
+        if (TESTS) {
             String fileName = "MonteCarlo for ITER_" + MONTE_CARLO_TESTS + "N_" + N + " YES_" + YES + " NO_" + NO + ".csv";
             new MonteCarlo(N, MONTE_CARLO_TESTS, YES, NO, gaussResult[resultPosition], jacobiResult[resultPosition], gaussSeidelResult[resultPosition], fileName);
         }
@@ -158,74 +158,49 @@ public class Main {
     }
 
     public static double[] gaussSeidelMethod(double A[][], double b[], int z, int iter, State states[]) {
-
         double[] results;
         double[] results2;
-        results=fillVectorWithZeros();
-        results2=fillVectorWithZeros();
-        double sum=0,sum2=0;
+        results = fillVectorWithZeros();
+        results2 = fillVectorWithZeros();
+        double sum = 0, sum2 = 0;
 
-
-
-
-        for(int j=0;j<ITERATIONS;j++) {
-            results2=results;
+        for (int j = 0; j < ITERATIONS; j++) {
+            results2 = results;
             for (int i = 0; i < COMBINATIONS; i++) {
-                sum=0;
-                sum2=0;
-                for(int k=0;k<i;k++){
+                sum = 0;
+                sum2 = 0;
+                for (int k = 0; k < i; k++) {
+                    sum += (A[i][k] * (results[k]));
+                }
+                for (int n = i + 1; n < COMBINATIONS; n++) {
 
-                        sum += (A[i][k]*(results[k])) ;
-                    }
-
-
-                    for(int n=i+1;n<COMBINATIONS;n++){
-
-                            sum2 += (A[i][n]*(results2[n])) ;
-
-                    }
-                    results[i]= (-sum -sum2 +b[i])/A[i][i];
-
+                    sum2 += (A[i][n] * (results2[n]));
+                }
+                results[i] = (-sum - sum2 + b[i]) / A[i][i];
             }
-
-
-
-
-
-
-
-
         }
 
         return results;
-
     }
 
     public static double[] jacobiMethod(double[][] A, double[] b, int num, int iter, State[] states) {
-
-
         double[] results;
         double[] results2;
-        results=fillVectorWithZeros();
-        results2=fillVectorWithZeros();
-        double sum=0;
+        results = fillVectorWithZeros();
+        results2 = fillVectorWithZeros();
+        double sum = 0;
 
-
-
-
-            for(int j=0;j<ITERATIONS;j++) {
+        for (int j = 0; j < ITERATIONS; j++) {
             for (int i = 0; i < COMBINATIONS; i++) {
-                sum=0;
-                for(int k=0;k<COMBINATIONS;k++){
-                    if(i!=k) {
-                        sum += (A[i][k]*(results2[k])) ;
+                sum = 0;
+                for (int k = 0; k < COMBINATIONS; k++) {
+                    if (i != k) {
+                        sum += (A[i][k] * (results2[k]));
                     }
                 }
-
-                results[i]=(b[i]-sum)/ A[i][i];
+                results[i] = (b[i] - sum) / A[i][i];
             }
-            results2=results;
-
+            results2 = results;
         }
 
         return results;
@@ -266,7 +241,7 @@ public class Main {
 
 
             for (int j = i + 1; j < n; j++) {
-                if(OPTIMIZATION && matrix[j][i] == 0) {
+                if (OPTIMIZATION && matrix[j][i] == 0) {
                     //skip calculation
                 } else {
                     double factor = matrix[j][i] / matrix[i][i];

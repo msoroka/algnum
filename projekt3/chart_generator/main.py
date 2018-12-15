@@ -21,7 +21,7 @@ absGauss = [];
 absGaussSeidel = [];
 absJacobi = [];
 
-fileName = 'MonteCarlo for ITER_100000N_30 YES_15 NO_12.csv';
+fileName = 'MonteCarlo for ITER_100000N_5 YES_1 NO_2.csv';
 
 plotly.tools.set_credentials_file(username='fruukus', api_key='glKc4Ak2w1x4r5fQl3Q0')
 with open(fileName) as csv_file:
@@ -53,30 +53,44 @@ with open(fileName) as csv_file:
 # Create traces
 trace0 = go.Scatter(
     x = iterations,
-    y = absGauss,
+    y = jacobiResults,
     mode = 'lines',
-    name = 'ABS Gauss'
+    name = 'wynik Jacobi'
 )
 
 trace1 = go.Scatter(
     x = iterations,
-    y = absGaussSeidel,
+    y = gaussResults,
     mode = 'lines',
-    name = 'ABS Gauss-Seidel'
+    name = 'wynik Gauss'
 )
 
 trace2 = go.Scatter(
     x = iterations,
-    y = absJacobi,
+    y = gaussSeidelResults,
     mode = 'lines',
-    name = 'ABS Jacobi'
+    name = 'wynik Gauss-Seidel'
 )
 
-data = [trace0, trace1, trace2]
+trace3 = go.Scatter(
+    x = iterations,
+    y = mcResults,
+    mode = 'lines',
+    name = 'wynik Monte Carlo'
+)
 
-layout = dict(title = 'Porównanie błędów bezwzględnych poszczególnych metod z MonteCarlo',
+# trace2 = go.Scatter(
+#     x = iterations,
+#     y = absJacobi,
+#     mode = 'lines',
+#     name = 'ABS Jacobi'
+# )
+
+data = [trace0, trace1, trace2, trace3]
+
+layout = dict(title = 'Dla N=5, YES=1, NO=2',
               xaxis = dict(title = 'Ilość iteracji'),
-              yaxis = dict(title = 'Błąd bezwzględny'),
+              yaxis = dict(title = 'Wyniki'),
               )
 fig = dict(data=data, layout=layout)
-py.plot(fig, filename='line-mode')
+py.plot(fig, filename='MonteCarlo_n5')
