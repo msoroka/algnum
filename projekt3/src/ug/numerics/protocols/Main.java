@@ -4,12 +4,12 @@ import java.io.FileNotFoundException;
 
 public class Main {
 
-    static int N = 120;
-    static int YES = 30;
-    static int NO = 30;
+    static int N = 30;
+    static int YES = 15;
+    static int NO = 12;
     static int UN = N - YES - NO;
-    static int ITERATIONS = 2500;
-    static int MONTE_CARLO_TESTS = 10000;
+    static int ITERATIONS = 500;
+    static int MONTE_CARLO_TESTS = 100000;
     static boolean OPTIMIZATION = true;
     static boolean TESTS = true;
 
