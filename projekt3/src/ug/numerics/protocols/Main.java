@@ -4,12 +4,12 @@ import java.io.FileNotFoundException;
 
 public class Main {
 
-    static int N = 120;
-    static int YES = 30;
-    static int NO = 30;
+    static int N = 60;
+    static int YES = 10;
+    static int NO = 10;
     static int UN = N - YES - NO;
-    static int ITERATIONS = 2500;
-    static int MONTE_CARLO_TESTS = 10000;
+    static int ITERATIONS = 500;
+    static int MONTE_CARLO_TESTS = 20;
     static boolean OPTIMIZATION = true;
     static boolean TESTS = true;
 
@@ -31,6 +31,8 @@ public class Main {
     static long elapsedTime = 0;
 
     public static void main(String[] args) throws FileNotFoundException {
+
+
         System.out.println("Parameters: ");
         System.out.println("N:              " + N);
         System.out.println("YES:            " + YES);
@@ -155,115 +157,78 @@ public class Main {
         return matrix;
     }
 
-    public static double[] gaussSeidelMethod(double A[][], double b[], int n, int iter, State states[]) {
+    public static double[] gaussSeidelMethod(double A[][], double b[], int z, int iter, State states[]) {
 
-        double L[][];
-        double D[][];
-        double U[][];
-        double x[];
+        double[] results;
+        double[] results2;
+        results=fillVectorWithZeros();
+        results2=fillVectorWithZeros();
+        double sum=0,sum2=0;
 
-        int i, j, k;
 
-        L = new double[n][n];
-        D = new double[n][n];
-        U = new double[n][n];
-        x = new double[n];
 
-        for (i = 0; i < n; i++)
-            for (j = 0; j < n; j++) {
-                if (i < j) {
-                    U[i][j] = A[i][j];
-                } else if (i > j) {
-                    L[i][j] = A[i][j];
-                } else {
-                    D[i][j] = A[i][j];
-                }
+
+        for(int j=0;j<ITERATIONS;j++) {
+            results2=results;
+            for (int i = 0; i < COMBINATIONS; i++) {
+                sum=0;
+                sum2=0;
+                for(int k=0;k<i;k++){
+
+                        sum += (A[i][k]*(results[k])) ;
+                    }
+
+
+                    for(int n=i+1;n<COMBINATIONS;n++){
+
+                            sum2 += (A[i][n]*(results2[n])) ;
+
+                    }
+                    results[i]= (-sum -sum2 +b[i])/A[i][i];
+
             }
 
 
-        for (i = 0; i < n; i++)
-            D[i][i] = 1 / D[i][i];
-
-        for (i = 0; i < n; i++)
-            b[i] *= D[i][i];
 
 
-        for (i = 0; i < n; i++)
-            for (j = 0; j < i; j++)
-                L[i][j] *= D[i][i];
 
 
-        for (i = 0; i < n; i++)
-            for (j = i + 1; j < n; j++)
-                U[i][j] *= D[i][i];
 
 
-        for (i = 0; i < n; i++)
-            x[i] = 0;
+        }
 
+        return results;
 
-        for (k = 0; k < iter; k++)
-            for (i = 0; i < n; i++) {
-                x[i] = b[i];
-                for (j = 0; j < i; j++)
-                    x[i] -= L[i][j] * x[j];
-                for (j = i + 1; j < n; j++)
-                    x[i] -= U[i][j] * x[j];
-            }
-
-//        System.out.println("Gauss-Seidel results: ");
-//        for (i = 0; i < n; i++)
-//            System.out.println("x[" + (i + 1) + "] = " + x[i]);
-
-        return x;
     }
 
     public static double[] jacobiMethod(double[][] A, double[] b, int num, int iter, State[] states) {
 
-        double M[][];
-        double N[];
-        double x1[];
-        double x2[];
 
-        int i, j, k;
-
-        M = new double[num][num];
-        N = new double[num];
-
-        x1 = new double[num];
-        x2 = new double[num];
-
-        for (i = 0; i < num; i++)
-            N[i] = 1 / A[i][i];
+        double[] results;
+        double[] results2;
+        results=fillVectorWithZeros();
+        results2=fillVectorWithZeros();
+        double sum=0;
 
 
-        for (i = 0; i < num; i++)
-            for (j = 0; j < num; j++)
-                if (i == j)
-                    M[i][j] = 0;
-                else
-                    M[i][j] = -(A[i][j] * N[i]);
-
-        for (i = 0; i < num; i++)
-            x1[i] = 0;
 
 
-        for (k = 0; k < iter; k++) {
-            for (i = 0; i < num; i++) {
-                x2[i] = N[i] * b[i];
-                for (j = 0; j < num; j++)
-                    x2[i] += M[i][j] * x1[j];
+            for(int j=0;j<ITERATIONS;j++) {
+            for (int i = 0; i < COMBINATIONS; i++) {
+                sum=0;
+                for(int k=0;k<COMBINATIONS;k++){
+                    if(i!=k) {
+                        sum += (A[i][k]*(results2[k])) ;
+                    }
+                }
+
+                results[i]=(b[i]-sum)/ A[i][i];
             }
-            for (i = 0; i < num; i++)
-                x1[i] = x2[i];
+            results2=results;
+
         }
 
-//        System.out.println("Jacobi results: ");
-//        for (i = 0; i < num; i++)
-//            System.out.println("x[" + (i + 1) + "] = " + x1[i]);
-
-
-        return x1;
+        return results;
     }
 
     public static double[] gaussWithPartialChoice(double matrix[][], double[] results, int numCalc, State states[]) {
